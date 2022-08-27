@@ -1,0 +1,5 @@
+mutation UpdateAsignacionEntradaVenta($input: AsignacionEntradaVentaInput!) {
+	UpdateAsignacionEntradaVenta(input: $input) {
+		userId
+	}
+}

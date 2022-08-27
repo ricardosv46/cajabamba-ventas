@@ -1,0 +1,28 @@
+.sidebar {
+}
+
+.sidebar .oculto {
+	@apply hidden;
+}
+
+.sidebar:hover .oculto,
+.sidebar.anchor .oculto {
+	@apply block opacity-100;
+}
+
+.cerrar {
+	@apply hidden;
+}
+
+.sidebar:hover .cerrar,
+.sidebar.anchor .cerrar {
+	@apply flex;
+}
+
+.text {
+	@apply w-1 truncate opacity-0;
+}
+.sidebar:hover .text,
+.sidebar.anchor .text {
+	@apply w-full opacity-100;
+}

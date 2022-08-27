@@ -1,0 +1,6 @@
+generated
+node_modules
+src/**/*.css
+src/**/*.graphql
+src/**/*.png
+src/**/*.jpg

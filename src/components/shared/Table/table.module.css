@@ -1,0 +1,26 @@
+.tableContainer {
+  @apply overflow-x-auto rounded-t-md w-full;
+}
+
+.tableContainer table {
+  @apply text-sm text-left w-full;
+}
+
+.tableContainer thead {
+  @apply text-xs sm:text-sm text-slate-400 dark:text-gray-400;
+}
+.tableContainer thead tr {
+  @apply border-b;
+}
+
+.tableContainer thead tr th {
+  @apply px-4 py-3;
+}
+
+.tableContainer tbody tr {
+  @apply bg-white border-b dark:bg-slate-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700 dark:text-white transition-colors;
+}
+
+.tableContainer tbody tr td {
+  @apply px-4 py-3;
+}

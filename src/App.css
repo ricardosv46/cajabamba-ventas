@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+._tableContainer_14yl8_1::-webkit-scrollbar {
+  @apply h-2;
+}
+._tableContainer_14yl8_1::-webkit-scrollbar-thumb {
+  @apply rounded bg-gray-300;
+}
+
+body {
+  @apply dark:bg-[#121927];
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

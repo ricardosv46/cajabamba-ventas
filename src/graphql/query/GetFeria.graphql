@@ -1,0 +1,26 @@
+query GetFeria {
+  GetFeria {
+    feriaId
+    titulo
+    descripcionCorta
+    descripcionLarga
+    terminosCondiciones
+    imagenPrincipal {
+      id
+      titulo
+      url
+    }
+    imagenSecundaria {
+      id
+      titulo
+      url
+    }
+    fecha
+    hora
+    fechaInicial
+    horaInicial
+    fechaFinal
+    horaFinal
+    descuento
+  }
+}

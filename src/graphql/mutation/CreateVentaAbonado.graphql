@@ -1,0 +1,5 @@
+mutation CreateVentaAbonado($input1: VentaInput!, $input2: [DetalleVentaInput!]) {
+	CreateVentaAbonado(input1: $input1, input2: $input2) {
+		ventaId
+	}
+}

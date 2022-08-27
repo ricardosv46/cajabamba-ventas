@@ -1,0 +1,27 @@
+query GetAllVentas($pagina: Int, $numeroPagina: Int) {
+	GetAllVentas(pagina: $pagina, numeroPagina: $numeroPagina) {
+		numeroTotal
+		data {
+			ventaId
+			tipoComprobante
+			numeroComprobante
+			razonSocial
+			celular
+			tipoVenta
+			email
+			precioTotal
+			fechaVenta
+			DetalleVenta {
+				detalleVentaId
+				tendido
+				codigo
+				asiento
+				precio
+				eventoId
+				feriaId
+				ventaId
+			}
+		}
+		numeroTotal
+	}
+}

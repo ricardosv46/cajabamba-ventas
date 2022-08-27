@@ -1,0 +1,23 @@
+query GetVentaId($ventaId: Int) {
+	GetVentaId(ventaId: $ventaId) {
+		ventaId
+		tipoComprobante
+		razonSocial
+		celular
+		precioTotal
+		fechaVenta
+		usuarioId
+		DetalleVenta {
+			detalleVentaId
+			tendido
+			codigo
+			asiento
+			precio
+			feriaId
+			eventoId
+			Evento {
+				titulo
+			}
+		}
+	}
+}
