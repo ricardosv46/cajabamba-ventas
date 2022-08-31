@@ -99,7 +99,7 @@ const Abono = () => {
 				})
 				refetchAsientos()
 				setSeleccionados([])
-				router('/ventas')
+				router(`/ventas/${res?.ventaId}`)
 			} else {
 				toast.error(res?.error, {
 					theme: 'colored',

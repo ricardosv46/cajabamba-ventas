@@ -32,7 +32,7 @@ const useVendedoras = (input = { pagina: 1, numeroPagina: 10 }) => {
 			})
 
 			if (res.data?.CreateVentaAbonado) {
-				return { ok: true }
+				return { ok: true, ventaId: res.data?.CreateVentaAbonado?.ventaId }
 			}
 			refetch()
 		} catch (error: any) {
@@ -52,7 +52,7 @@ const useVendedoras = (input = { pagina: 1, numeroPagina: 10 }) => {
 			})
 
 			if (res.data?.CreateVenta) {
-				return { ok: true }
+				return { ok: true, ventaId: res.data?.CreateVenta?.ventaId }
 			}
 			refetch()
 		} catch (error: any) {

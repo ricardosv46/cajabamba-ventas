@@ -106,7 +106,7 @@ const Abono = () => {
 				})
 				refetchAsientos()
 				setSeleccionados([])
-				router('/ventas')
+				router(`/ventas/${res?.ventaId}`)
 			} else {
 				toast.error(res?.error, {
 					theme: 'colored',
@@ -172,6 +172,7 @@ const Abono = () => {
 								doble={innerValue === 'T2S' ? 'Tendido2' : innerValue === 'T3' ? 'Tendido3' : 'Ruedo'}
 								direccion={innerValue === 'T1I' ? 'start' : innerValue === 'T4P' ? 'start' : 'center'}
 								id={innerValue}
+								evento={evento?.eventoId}
 							/>
 						)}
 					</div>
