@@ -1,0 +1,13 @@
+query GetAllButacaEvento($tendido: String, $eventoId: Int) {
+	GetAllButacaEvento(tendido: $tendido, eventoId: $eventoId) {
+		data {
+			butacaEventoId
+			eventoId
+			tendido
+			codigo
+			precio
+			cantidad
+		}
+		numeroTotal
+	}
+}

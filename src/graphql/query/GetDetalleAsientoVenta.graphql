@@ -1,0 +1,15 @@
+query GetDetalleAsientoVenta($code: String) {
+  GetDetalleAsientoVenta(code: $code) {
+    asientoId
+    nombres
+    tipoDocumento
+    numDocumento
+    nombres
+    apellidos
+    reservado
+    tendido
+    codigo
+    fecha
+    hora
+  }
+}

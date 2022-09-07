@@ -8,7 +8,6 @@ import Select from '@components/shared/Select/Select'
 import { Show } from '@components/shared/Show/Show'
 import useToggle from '@hooks/useToggle'
 import { useAsientosAbonado } from '@services/useAsientosAbonado'
-import useButacas from '@services/useButacas'
 import { usePreciosRefs } from '@services/usePreciosRefs'
 import { classNames } from '@utils/classNames'
 import { genNombreFilas } from '@utils/genNombreFilas'
@@ -23,6 +22,7 @@ import { useAsientosEventos } from '@services/useAsientosEventos'
 import Spinner from '@components/shared/Spinner/Spinner'
 import moment from 'moment'
 import { useBloques } from '@services/useBloques'
+import { useButacasEvento } from '@services/useButacasEvento'
 const Abono = () => {
   const [innerValue, setInnerValue] = useState<string>('T1P')
   const [seleccionados, setSeleccionados] = useState<IColums[]>([])
@@ -61,13 +61,16 @@ const Abono = () => {
     label: tendido?.titulo!
     // desc: tendido?.tendido!
   }))
-  const { db: butacas, loading, refetch } = useButacas({ tendido: innerValue })
+  const { butacas, loading, refetch } = useButacasEvento({
+    tendido: innerValue,
+    eventoId: evento?.eventoId
+  })
 
   const dataAsientos = useMemo(() => {
     if (butacas?.length && !loading) {
       return butacas.map((item, i) => ({
         tendido: item?.tendido || '',
-        butacaId: item?.butacaId || '',
+        butacaId: String(item?.butacaEventoId) || '',
         codigo: item?.codigo || '',
         cantidad: item?.cantidad || 0,
         precio: item?.precio || 0
@@ -96,7 +99,7 @@ const Abono = () => {
         razonSocial:
           values.tipoComprobante === 'Factura'
             ? values.razonSocial
-            : values.nombres + '' + values.apellidos,
+            : values.nombres + ' ' + values.apellidos,
         tipoVenta: values.tipoVenta,
         celular: values.celular,
         email: values.email
