@@ -33,6 +33,7 @@ export type Asiento = {
 
 export type AsignacionEntrada = {
   __typename?: 'AsignacionEntrada';
+  Evento?: Maybe<Evento>;
   apellidos?: Maybe<Scalars['String']>;
   asientoId?: Maybe<Scalars['ID']>;
   codigo?: Maybe<Scalars['String']>;
@@ -104,6 +105,22 @@ export type Butaca = {
   tendido?: Maybe<Scalars['String']>;
 };
 
+export type ButacaEvento = {
+  __typename?: 'ButacaEvento';
+  butacaEventoId?: Maybe<Scalars['Int']>;
+  cantidad?: Maybe<Scalars['Int']>;
+  codigo?: Maybe<Scalars['String']>;
+  eventoId?: Maybe<Scalars['Int']>;
+  precio?: Maybe<Scalars['Float']>;
+  tendido?: Maybe<Scalars['String']>;
+};
+
+export type ButacaEventoInput = {
+  butacaEventoId?: InputMaybe<Scalars['Int']>;
+  eventoId?: InputMaybe<Scalars['Int']>;
+  precio?: InputMaybe<Scalars['Float']>;
+};
+
 export type ButacaInput = {
   butacaId?: InputMaybe<Scalars['ID']>;
   precio?: InputMaybe<Scalars['Float']>;
@@ -111,6 +128,7 @@ export type ButacaInput = {
 
 export type DetallePedido = {
   __typename?: 'DetallePedido';
+  Evento?: Maybe<Evento>;
   asiento?: Maybe<Scalars['String']>;
   codigo?: Maybe<Scalars['String']>;
   detallePedidoId?: Maybe<Scalars['ID']>;
@@ -233,6 +251,12 @@ export type GetAllAsientos = {
   numeroTotal?: Maybe<Scalars['Int']>;
 };
 
+export type GetAllButacaEvento = {
+  __typename?: 'GetAllButacaEvento';
+  data?: Maybe<Array<Maybe<ButacaEvento>>>;
+  numeroTotal?: Maybe<Scalars['Int']>;
+};
+
 export type GetAllButacas = {
   __typename?: 'GetAllButacas';
   data?: Maybe<Array<Maybe<Butaca>>>;
@@ -289,6 +313,7 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  AsignarPrecioButacaEvento: ButacaEvento;
   ConsultEmail?: Maybe<Scalars['String']>;
   CreateBloqueoAsiento?: Maybe<Scalars['String']>;
   CreateBloqueoAsientoAbono?: Maybe<Scalars['String']>;
@@ -301,8 +326,10 @@ export type Mutation = {
   CreateVendedora?: Maybe<Vendedora>;
   CreateVenta: Venta;
   CreateVentaAbonado: Venta;
+  DeleteAsientoBloqueado?: Maybe<Scalars['String']>;
   DeleteEvento?: Maybe<Scalars['String']>;
   DeleteImagen: Scalars['String'];
+  DeleteVenta?: Maybe<Scalars['String']>;
   Login?: Maybe<User>;
   RecoverPassword?: Maybe<Scalars['String']>;
   RestartAsientos?: Maybe<Scalars['String']>;
@@ -320,6 +347,11 @@ export type Mutation = {
   UpdateUsuario: User;
   UpdateVendedora?: Maybe<Vendedora>;
   ValidacionEntrada?: Maybe<Asistente>;
+};
+
+
+export type MutationAsignarPrecioButacaEventoArgs = {
+  input?: InputMaybe<ButacaEventoInput>;
 };
 
 
@@ -389,6 +421,11 @@ export type MutationCreateVentaAbonadoArgs = {
 };
 
 
+export type MutationDeleteAsientoBloqueadoArgs = {
+  asientoId: Scalars['Int'];
+};
+
+
 export type MutationDeleteEventoArgs = {
   eventoId: Scalars['Int'];
 };
@@ -396,6 +433,11 @@ export type MutationDeleteEventoArgs = {
 
 export type MutationDeleteImagenArgs = {
   id: Scalars['Int'];
+};
+
+
+export type MutationDeleteVentaArgs = {
+  ventaId: Scalars['Int'];
 };
 
 
@@ -482,7 +524,7 @@ export type MutationUpdateVendedoraArgs = {
 
 export type MutationValidacionEntradaArgs = {
   constante?: InputMaybe<Scalars['String']>;
-  fecha?: InputMaybe<Scalars['Date']>;
+  eventoId?: InputMaybe<Scalars['Int']>;
   numDocumento?: InputMaybe<Scalars['String']>;
   tipoDocumento?: InputMaybe<Scalars['String']>;
 };
@@ -541,6 +583,7 @@ export type Pedido = {
   __typename?: 'Pedido';
   DetallePedido?: Maybe<Array<DetallePedido>>;
   Usuario?: Maybe<User>;
+  email?: Maybe<Scalars['String']>;
   fechaPedido?: Maybe<Scalars['Date']>;
   numeroComprobante?: Maybe<Scalars['String']>;
   pedidoId?: Maybe<Scalars['ID']>;
@@ -565,7 +608,9 @@ export type Query = {
   __typename?: 'Query';
   GetAllAsientos?: Maybe<Array<Maybe<Asiento>>>;
   GetAllAsientosAbonados?: Maybe<Array<Maybe<Asiento>>>;
+  GetAllAsientosBloqueados?: Maybe<Array<Maybe<AsignacionEntrada>>>;
   GetAllBloques?: Maybe<Array<Maybe<Bloque>>>;
+  GetAllButacaEvento?: Maybe<GetAllButacaEvento>;
   GetAllButacas?: Maybe<GetAllButacas>;
   GetAllEntradasUsuario?: Maybe<Array<Maybe<AsignacionEntrada>>>;
   GetAllEventos?: Maybe<GetAllEventos>;
@@ -576,11 +621,14 @@ export type Query = {
   GetAllSuscriptores?: Maybe<GetAllSuscriptores>;
   GetAllVendedoras?: Maybe<GetAllVendedoras>;
   GetAllVentas?: Maybe<GetAllVentas>;
+  GetDetalleAsientoVenta?: Maybe<AsignacionEntrada>;
   GetEventoSlug?: Maybe<Evento>;
   GetFeria?: Maybe<Feria>;
   GetPedidoId?: Maybe<Pedido>;
   GetReporteExcel?: Maybe<Scalars['String']>;
   GetVentaId?: Maybe<Venta>;
+  ReporteGetAllPedidos?: Maybe<Scalars['String']>;
+  ReporteGetAllVentas?: Maybe<Scalars['String']>;
 };
 
 
@@ -598,6 +646,12 @@ export type QueryGetAllAsientosAbonadosArgs = {
 
 export type QueryGetAllBloquesArgs = {
   feriaId?: InputMaybe<Scalars['Int']>;
+  tendido?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetAllButacaEventoArgs = {
+  eventoId?: InputMaybe<Scalars['Int']>;
   tendido?: InputMaybe<Scalars['String']>;
 };
 
@@ -625,8 +679,12 @@ export type QueryGetAllImagenesArgs = {
 
 
 export type QueryGetAllPedidosArgs = {
+  email?: InputMaybe<Scalars['String']>;
+  fechaFinal?: InputMaybe<Scalars['String']>;
+  fechaInicial?: InputMaybe<Scalars['String']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
+  razonSocial?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -644,8 +702,17 @@ export type QueryGetAllVendedorasArgs = {
 
 
 export type QueryGetAllVentasArgs = {
+  fechaFinal?: InputMaybe<Scalars['String']>;
+  fechaInicial?: InputMaybe<Scalars['String']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
   pagina?: InputMaybe<Scalars['Int']>;
+  tipoVenta?: InputMaybe<Scalars['String']>;
+  vendedorId?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryGetDetalleAsientoVentaArgs = {
+  code?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -666,6 +733,22 @@ export type QueryGetReporteExcelArgs = {
 
 export type QueryGetVentaIdArgs = {
   ventaId?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryReporteGetAllPedidosArgs = {
+  email?: InputMaybe<Scalars['String']>;
+  fechaFinal?: InputMaybe<Scalars['String']>;
+  fechaInicial?: InputMaybe<Scalars['String']>;
+  razonSocial?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryReporteGetAllVentasArgs = {
+  fechaFinal?: InputMaybe<Scalars['String']>;
+  fechaInicial?: InputMaybe<Scalars['String']>;
+  tipoVenta?: InputMaybe<Scalars['String']>;
+  vendedorId?: InputMaybe<Scalars['Int']>;
 };
 
 export type Referencial = {
@@ -788,10 +871,11 @@ export type Venta = {
   celular?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fechaVenta?: Maybe<Scalars['Date']>;
-  numeroComprobante?: Maybe<Scalars['String']>;
+  numeroDocumento?: Maybe<Scalars['String']>;
   precioTotal?: Maybe<Scalars['Float']>;
   razonSocial?: Maybe<Scalars['String']>;
   tipoComprobante?: Maybe<Scalars['String']>;
+  tipoDocumento?: Maybe<Scalars['String']>;
   tipoVenta?: Maybe<Scalars['String']>;
   usuarioId?: Maybe<Scalars['Int']>;
   ventaId?: Maybe<Scalars['ID']>;
@@ -801,10 +885,11 @@ export type VentaInput = {
   celular?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   fechaVenta?: InputMaybe<Scalars['Date']>;
-  numeroComprobante?: InputMaybe<Scalars['String']>;
+  numeroDocumento?: InputMaybe<Scalars['String']>;
   precioTotal?: InputMaybe<Scalars['Float']>;
   razonSocial?: InputMaybe<Scalars['String']>;
   tipoComprobante?: InputMaybe<Scalars['String']>;
+  tipoDocumento?: InputMaybe<Scalars['String']>;
   tipoVenta?: InputMaybe<Scalars['String']>;
   transaccionId?: InputMaybe<Scalars['Float']>;
   ventaId?: InputMaybe<Scalars['ID']>;
@@ -887,10 +972,14 @@ export type GetAllPrecioReferencialQuery = { __typename?: 'Query', GetAllPrecioR
 export type GetAllVentasQueryVariables = Exact<{
   pagina?: InputMaybe<Scalars['Int']>;
   numeroPagina?: InputMaybe<Scalars['Int']>;
+  vendedorId?: InputMaybe<Scalars['Int']>;
+  tipoVenta?: InputMaybe<Scalars['String']>;
+  fechaInicial?: InputMaybe<Scalars['String']>;
+  fechaFinal?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetAllVentasQuery = { __typename?: 'Query', GetAllVentas?: { __typename?: 'GetAllVentas', numeroTotal?: number | null, data?: Array<{ __typename?: 'Venta', ventaId?: string | null, tipoComprobante?: string | null, numeroComprobante?: string | null, razonSocial?: string | null, celular?: string | null, tipoVenta?: string | null, email?: string | null, precioTotal?: number | null, fechaVenta?: any | null, DetalleVenta?: Array<{ __typename?: 'DetalleVenta', detalleVentaId?: string | null, tendido?: string | null, codigo?: string | null, asiento?: string | null, precio?: number | null, eventoId?: number | null, feriaId?: number | null, ventaId?: number | null }> | null }> | null } | null };
+export type GetAllVentasQuery = { __typename?: 'Query', GetAllVentas?: { __typename?: 'GetAllVentas', numeroTotal?: number | null, data?: Array<{ __typename?: 'Venta', ventaId?: string | null, tipoComprobante?: string | null, tipoDocumento?: string | null, numeroDocumento?: string | null, razonSocial?: string | null, celular?: string | null, tipoVenta?: string | null, email?: string | null, precioTotal?: number | null, fechaVenta?: any | null, DetalleVenta?: Array<{ __typename?: 'DetalleVenta', detalleVentaId?: string | null, tendido?: string | null, codigo?: string | null, asiento?: string | null, precio?: number | null, eventoId?: number | null, feriaId?: number | null, ventaId?: number | null }> | null }> | null } | null };
 
 export type GetFeriaQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1307,13 +1396,21 @@ export type GetAllPrecioReferencialQueryHookResult = ReturnType<typeof useGetAll
 export type GetAllPrecioReferencialLazyQueryHookResult = ReturnType<typeof useGetAllPrecioReferencialLazyQuery>;
 export type GetAllPrecioReferencialQueryResult = Apollo.QueryResult<GetAllPrecioReferencialQuery, GetAllPrecioReferencialQueryVariables>;
 export const GetAllVentasDocument = gql`
-    query GetAllVentas($pagina: Int, $numeroPagina: Int) {
-  GetAllVentas(pagina: $pagina, numeroPagina: $numeroPagina) {
+    query GetAllVentas($pagina: Int, $numeroPagina: Int, $vendedorId: Int, $tipoVenta: String, $fechaInicial: String, $fechaFinal: String) {
+  GetAllVentas(
+    pagina: $pagina
+    numeroPagina: $numeroPagina
+    vendedorId: $vendedorId
+    tipoVenta: $tipoVenta
+    fechaInicial: $fechaInicial
+    fechaFinal: $fechaFinal
+  ) {
     numeroTotal
     data {
       ventaId
       tipoComprobante
-      numeroComprobante
+      tipoDocumento
+      numeroDocumento
       razonSocial
       celular
       tipoVenta
@@ -1350,6 +1447,10 @@ export const GetAllVentasDocument = gql`
  *   variables: {
  *      pagina: // value for 'pagina'
  *      numeroPagina: // value for 'numeroPagina'
+ *      vendedorId: // value for 'vendedorId'
+ *      tipoVenta: // value for 'tipoVenta'
+ *      fechaInicial: // value for 'fechaInicial'
+ *      fechaFinal: // value for 'fechaFinal'
  *   },
  * });
  */

@@ -26,9 +26,10 @@ const LoginPage = () => {
       password: values?.password
     }).then((res) => {
       if (res?.ok) {
-        login(res?.data!)
-      } else {
-        toast.error('Email o Password incorrecto.', {
+        if (res?.data?.tipoUsuario === 3) {
+          return login(res?.data!)
+        }
+        return toast.error('El usuario no tiene permisos.', {
           theme: 'colored',
           position: 'top-right',
           autoClose: 5000,
@@ -39,15 +40,25 @@ const LoginPage = () => {
           progress: undefined
         })
       }
+
+      toast.error('Email o Password incorrecto.', {
+        theme: 'colored',
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
     })
   }
 
-  const { values, errors, handleChange, touched, handleBlur, handleSubmit } =
-    useFormik({
-      validate: validateLogin,
-      onSubmit,
-      initialValues: { email: '', password: '' }
-    })
+  const { values, errors, handleChange, touched, handleBlur, handleSubmit } = useFormik({
+    validate: validateLogin,
+    onSubmit,
+    initialValues: { email: '', password: '' }
+  })
 
   return (
     <div className="relative flex justify-center h-screen px-4 overflow-hidden md:px-0">
@@ -56,7 +67,7 @@ const LoginPage = () => {
           <div className="w-48 mb-10">
             <IconLogo />
           </div>
-          <h1 className="text-2xl font-bold text-left  text-slate-800 dark:text-slate-200 lg:text-3xl">
+          <h1 className="text-2xl font-bold text-left text-slate-800 dark:text-slate-200 lg:text-3xl">
             Inicia sesión
           </h1>
           {/* <p className="mb-3 paragraph-2 text-slate-500 dark:text-slate-300">
@@ -85,11 +96,7 @@ const LoginPage = () => {
               error={errors.password}
               touched={touched?.password ?? false}
             />
-            <button
-              type="submit"
-              disabled={loadingLogin}
-              className="btn btn-solid-primary"
-            >
+            <button type="submit" disabled={loadingLogin} className="btn btn-solid-primary">
               Inicia sesión
               {loadingLogin && <Spinner />}
             </button>
@@ -105,8 +112,7 @@ const LoginPage = () => {
                 // onClick={navigate('./recuperar', { replace: true })!}
                 onClick={() => {
                   router('/auth/change-password')
-                }}
-              >
+                }}>
                 Recuperar contraseña
               </p>
             </div>
@@ -118,9 +124,7 @@ const LoginPage = () => {
         <div className="bg-[#0E1C3A] absolute opacity-70 inset-0"></div>
         <div className="absolute top-0 flex flex-col items-start justify-center w-full h-full p-16 font-bold">
           <h2 className="text-6xl font-bold text-white "> {titleLoginTop}</h2>
-          <h2 className="text-6xl font-bold text-primary-500">
-            {titleLoginBottom}
-          </h2>
+          <h2 className="text-6xl font-bold text-primary-500">{titleLoginBottom}</h2>
         </div>
       </div>
       <ToggleTheme className="absolute top-5 left-5" />

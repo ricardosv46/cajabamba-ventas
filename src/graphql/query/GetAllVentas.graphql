@@ -1,27 +1,42 @@
-query GetAllVentas($pagina: Int, $numeroPagina: Int) {
-	GetAllVentas(pagina: $pagina, numeroPagina: $numeroPagina) {
-		numeroTotal
-		data {
-			ventaId
-			tipoComprobante
-			numeroComprobante
-			razonSocial
-			celular
-			tipoVenta
-			email
-			precioTotal
-			fechaVenta
-			DetalleVenta {
-				detalleVentaId
-				tendido
-				codigo
-				asiento
-				precio
-				eventoId
-				feriaId
-				ventaId
-			}
-		}
-		numeroTotal
-	}
+query GetAllVentas(
+  $pagina: Int
+  $numeroPagina: Int
+  $vendedorId: Int
+  $tipoVenta: String
+  $fechaInicial: String
+  $fechaFinal: String
+) {
+  GetAllVentas(
+    pagina: $pagina
+    numeroPagina: $numeroPagina
+    vendedorId: $vendedorId
+    tipoVenta: $tipoVenta
+    fechaInicial: $fechaInicial
+    fechaFinal: $fechaFinal
+  ) {
+    numeroTotal
+    data {
+      ventaId
+      tipoComprobante
+      tipoDocumento
+      numeroDocumento
+      razonSocial
+      celular
+      tipoVenta
+      email
+      precioTotal
+      fechaVenta
+      DetalleVenta {
+        detalleVentaId
+        tendido
+        codigo
+        asiento
+        precio
+        eventoId
+        feriaId
+        ventaId
+      }
+    }
+    numeroTotal
+  }
 }
