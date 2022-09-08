@@ -88,10 +88,7 @@ const Abono = () => {
         numeroDocumento: values.numeroDocumento,
         precioTotal: total,
         fechaVenta: fecha,
-        razonSocial:
-          values.tipoComprobante === 'Factura'
-            ? values.razonSocial
-            : values.nombres + ' ' + values.apellidos,
+        razonSocial: values.tipoComprobante === 'Factura' ? values.razonSocial : nombreApellido,
         tipoVenta: values.tipoVenta,
         celular: values.celular,
         email: values.email
@@ -128,11 +125,10 @@ const Abono = () => {
   }
 
   const { values, errors, touched, ...form } = useFormik({
-    validate: validateVenta,
     onSubmit,
     initialValues: {
-      tipoComprobante: '',
-      tipoDocumento: '',
+      tipoComprobante: 'Boleta',
+      tipoDocumento: 'DNI',
       numeroDocumento: '',
       email: '',
       celular: '',
@@ -142,6 +138,15 @@ const Abono = () => {
       tipoVenta: ''
     }
   })
+
+  const nombreApellido =
+    values.nombres.length && values.apellidos.length
+      ? '${values.nombres} ${values.apellidos}'
+      : values.nombres.length
+      ? values.nombres
+      : values.apellidos.length
+      ? values.apellidos
+      : ''
 
   return (
     <>
