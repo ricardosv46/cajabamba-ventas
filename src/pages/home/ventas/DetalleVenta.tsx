@@ -4,7 +4,8 @@ import { Show } from '@components/shared/Show/Show'
 import Spinner from '@components/shared/Spinner/Spinner'
 import Table from '@components/shared/Table/Table'
 import useToggle from '@hooks/useToggle'
-import { IconUser } from '@icons'
+import { IconPdf, IconUser } from '@icons'
+import { useGetReporteAsientoVendedora } from '@services/useGetReporteAsientoVendedora'
 import { useVentaId } from '@services/useVentaId'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -26,15 +27,27 @@ const DetalleVenta = () => {
   const handleUpdate = () => {}
 
   const VerDetalle = ({ id, data }: { id: string; data?: any }) => {
+    const code = `${data?.codigo}-${data?.asiento}-${data?.eventoId}`
+    const { loading: loadingReporte, reporte: linkReporte } = useGetReporteAsientoVendedora({
+      code
+    })
     return (
-      <button
-        className="text-center btn-icon btn-ghost-primary"
-        onClick={() => {
-          setDatosventa(data)
-          onOpen()
-        }}>
-        <IconUser />
-      </button>
+      <div className="flex justify-center gap-3">
+        <button
+          className="text-center btn-icon btn-ghost-primary"
+          onClick={() => {
+            setDatosventa(data)
+            onOpen()
+          }}>
+          <IconUser />
+        </button>
+        <button
+          disabled={loadingReporte}
+          className="text-center btn-icon btn-ghost-primary"
+          onClick={() => window.open(linkReporte)}>
+          <IconPdf />
+        </button>
+      </div>
     )
   }
 

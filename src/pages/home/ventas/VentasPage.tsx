@@ -8,7 +8,7 @@ import { IconEye, IconPlus } from '@icons'
 import useVentas from '@services/useVentas'
 import { useFormik } from 'formik'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 interface IPropsVenta {
   vendedorId: number | null
@@ -71,14 +71,11 @@ const dataTipoVenta = [
 const VerDetalle = ({ id }: { id: string }) => {
   const router = useNavigate()
   return (
-    <button
-      className="text-center btn-icon btn-ghost-primary"
-      onClick={() => {
-        console.log(id)
-        router(id)
-      }}>
-      <IconEye />
-    </button>
+    <Link to={id}>
+      <button className="text-center btn-icon btn-ghost-primary">
+        <IconEye />
+      </button>
+    </Link>
   )
 }
 

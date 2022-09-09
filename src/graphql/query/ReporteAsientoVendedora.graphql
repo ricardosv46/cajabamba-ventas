@@ -1,0 +1,3 @@
+query ReporteAsientoVendedora($code: String) {
+  ReporteAsientoVendedora(code: $code)
+}
