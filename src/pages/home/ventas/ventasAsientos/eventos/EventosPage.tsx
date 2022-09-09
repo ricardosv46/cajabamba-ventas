@@ -149,7 +149,7 @@ const Abono = () => {
 
   const nombreApellido =
     values.nombres.length && values.apellidos.length
-      ? '${values.nombres} ${values.apellidos}'
+      ? `${values.nombres} ${values.apellidos}`
       : values.nombres.length
       ? values.nombres
       : values.apellidos.length
