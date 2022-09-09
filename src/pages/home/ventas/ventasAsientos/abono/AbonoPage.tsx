@@ -135,7 +135,7 @@ const Abono = () => {
       razonSocial: '',
       nombres: '',
       apellidos: '',
-      tipoVenta: ''
+      tipoVenta: 'Efectivo'
     }
   })
 
